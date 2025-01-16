@@ -55,7 +55,7 @@ public class GameTest {
         var res1 = board.playTurn(0, 0); // X BOARD
         assertSame(res1, PlayReaction.SuccessBoard);
         var res2 = board.playTurn(0, 0); // X CELL
-        assertSame(res2, PlayReaction.SuccessCell);
+        assertSame(res2, PlayReaction.SuccessCellRelocated);
         var res3 = board.playTurn(0, 1); // O CELL
         assertSame(res3, PlayReaction.SuccessCell);
         assertSame(((Board)board.getBoard().get(0, 0)).get(0, 1).getValue(), CellValue.O);
