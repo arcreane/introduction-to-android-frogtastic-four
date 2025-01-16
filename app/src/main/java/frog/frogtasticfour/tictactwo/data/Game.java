@@ -7,11 +7,16 @@ public class Game {
     private final Board _board;
 
     private CellValue _turn;
+    private final Level _currentLevel;
     public Board getBoard() {
         return _board;
     }
     public boolean hasWinner() {
         return _board.getValue() != CellValue.Empty;
+    }
+
+    public Level getCurrentLevel() {
+        return _currentLevel.getLastChild();
     }
 
     public CellValue getWinner() {
@@ -35,5 +40,6 @@ public class Game {
 
         _board = Board.CreateBoard(depth, size);
         _turn = starting;
+        _currentLevel = new Level(_board, 0);
     }
 }
