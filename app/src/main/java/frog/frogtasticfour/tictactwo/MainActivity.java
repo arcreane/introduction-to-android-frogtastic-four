@@ -1,77 +1,60 @@
 package frog.frogtasticfour.tictactwo;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import frog.frogtasticfour.tictactwo.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
-
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+    private EditText player1NameInput;
+    private EditText player2NameInput;
+    private Button startButton;
+    private Button settingsButton;
+    private ImageButton helpButton;
+    private TextView gameName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main); // Ensure the layout file matches your XML file name.
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        // Initialize views
+        player1NameInput = findViewById(R.id.player1Name);
+        player2NameInput = findViewById(R.id.player2Name);
+        startButton = findViewById(R.id.startButton);
+        settingsButton = findViewById(R.id.settingButton);
+        helpButton = findViewById(R.id.helpButton);
+        gameName = findViewById(R.id.gameName);
 
-        setSupportActionBar(binding.toolbar);
+        // Set up listeners for buttons
+        startButton.setOnClickListener(view -> {
+            String player1 = player1NameInput.getText().toString().trim();
+            String player2 = player2NameInput.getText().toString().trim();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
+            if (player1.isEmpty() || player2.isEmpty()) {
+                Toast.makeText(MainActivity.this, "Please enter names for both players", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Game starting with " + player1 + " and " + player2, Toast.LENGTH_SHORT).show();
+                //TODO: Add logic to navigate to the game screen or start the game
+                startActivity(new Intent(this, GameActivity.class));
             }
         });
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+        settingsButton.setOnClickListener(view ->
+                        Toast.makeText(MainActivity.this, "Settings clicked", Toast.LENGTH_SHORT).show()
+                //TODO: Add logic for navigating to settings or updating preferences
+        );
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+        helpButton.setOnClickListener(view ->
+                        Toast.makeText(MainActivity.this, "Help clicked", Toast.LENGTH_SHORT).show()
+                //TODO: Add logic for displaying help information
+        );
     }
 }
