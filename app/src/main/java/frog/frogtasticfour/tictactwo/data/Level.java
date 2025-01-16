@@ -5,6 +5,12 @@ public class Level {
     private Level _child;
     private final Board _board;
     private int _depth;
+    private Point _refPosition;
+
+    public Level(Board board, int initialDepth, int x, int y) {
+        this(board, initialDepth);
+        _refPosition = new Point(x, y);
+    }
 
     public Level(Board board, int initialDepth) {
         _board = board;
@@ -13,6 +19,14 @@ public class Level {
 
     public int getDepth() {
         return _depth;
+    }
+
+    public boolean hasRelativePosition() {
+        return _refPosition != null;
+    }
+
+    public Point getRelativePositionToParent() {
+        return _refPosition;
     }
 
     public Level setParent(Level parent) {
