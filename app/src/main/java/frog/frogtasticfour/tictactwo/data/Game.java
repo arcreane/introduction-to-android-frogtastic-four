@@ -1,6 +1,7 @@
 package frog.frogtasticfour.tictactwo.data;
 
 import frog.frogtasticfour.tictactwo.data.enums.CellValue;
+import frog.frogtasticfour.tictactwo.data.enums.PlayReaction;
 import frog.frogtasticfour.tictactwo.exceptions.GameException;
 
 public class Game {
@@ -41,5 +42,19 @@ public class Game {
         _board = Board.CreateBoard(depth, size);
         _turn = starting;
         _currentLevel = new Level(_board, 0);
+    }
+
+    public PlayReaction setLevel(int row, int column) {
+        var size = _board.getSize();
+        if (row > size || column > size)
+            return PlayReaction.FailIllegalMove;
+        var currentChild = _currentLevel.getLastChild();
+        var currentBoard = currentChild.getBoard();
+        if (currentBoard.getValue() != CellValue.Empty || currentBoard.containsCellable())
+            return PlayReaction.FailNotEmpty; // cant enter a cell or something that already has a value
+        var createdLevel = new Level((Board) currentChild.getBoard().get(row, column), currentChild.getDepth() + 1, row, column);
+        createdLevel.setParent(currentChild);
+        currentChild.setChild(createdLevel);
+        return PlayReaction.Success;
     }
 }
