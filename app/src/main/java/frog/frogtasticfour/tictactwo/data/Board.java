@@ -6,6 +6,18 @@ public class Board implements IGridable{
     private CellValue _value = CellValue.Empty;
     private final IGridable[][] _grid;
 
+    public IGridable get(int row, int column) {
+        return _grid[row][column];
+    }
+
+    public boolean containsCellable() {
+        return _grid[0][0] instanceof Cell;
+    }
+
+    public int getSize() {
+        return _grid.length; //row and columns will be the same so this works
+    }
+
     public Board(IGridable[][] grid) {
         _grid = grid;
     }
