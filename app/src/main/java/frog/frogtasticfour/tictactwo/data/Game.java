@@ -12,12 +12,30 @@ public class Game {
     public Board getBoard() {
         return _board;
     }
+    
+    private Point _lastPlayedPoint;
+
     public boolean hasWinner() {
         return _board.getValue() != CellValue.Empty;
     }
 
     public Level getCurrentLevel() {
         return _currentLevel.getLastChild();
+    }
+
+    private boolean calculateRespectPastPoint() {
+        if (_lastPlayedPoint == null)
+            return false;
+
+        var currentChild = getCurrentLevel();
+
+        if (currentChild.hasParent()) {
+            var parent = currentChild.getParent();
+            if (!parent.getBoard().get(_lastPlayedPoint.x, _lastPlayedPoint.y).getValue().equals(CellValue.Empty))
+                return false;
+        }
+
+        return true;
     }
 
     public CellValue getWinner() {
