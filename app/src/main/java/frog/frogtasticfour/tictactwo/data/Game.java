@@ -21,4 +21,12 @@ public class Game {
         return _turn;
     }
 
+    public void swapTurn() {
+        if (_turn == CellValue.X)
+            _turn = CellValue.O;
+        else
+            _turn = CellValue.X;
+    }
+
+
 }
