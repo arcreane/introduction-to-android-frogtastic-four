@@ -2,6 +2,7 @@ package frog.frogtasticfour.tictactwo.data;
 
 import frog.frogtasticfour.tictactwo.data.enums.CellValue;
 import frog.frogtasticfour.tictactwo.exceptions.BoardException;
+import frog.frogtasticfour.tictactwo.exceptions.CellValueException;
 
 public class Board implements IGridable{
     private CellValue _value = CellValue.Empty;
@@ -109,6 +110,8 @@ public class Board implements IGridable{
 
     @Override
     public void setValue(CellValue value) {
+        if (_value != CellValue.Empty)
+            throw new CellValueException("This board already has a value");
         if (value == CellValue.Calculate) {
             CellValue winner = calculateWinner();
             if (winner == CellValue.X || winner == CellValue.O || winner == CellValue.Tie) {
