@@ -12,7 +12,7 @@ public class Game {
     public Board getBoard() {
         return _board;
     }
-    
+
     private Point _lastPlayedPoint;
 
     public boolean hasWinner() {
@@ -74,5 +74,55 @@ public class Game {
         createdLevel.setParent(currentChild);
         currentChild.setChild(createdLevel);
         return PlayReaction.Success;
+    }
+
+    public PlayReaction playTurn(int row, int column) {
+        if (hasWinner())
+            return PlayReaction.FailGameOver;
+
+        var currentChild = _currentLevel.getLastChild();
+        var currentBoard = currentChild.getBoard();
+        IGridable currentThing = currentBoard.get(row, column); //MAKE SURE IT IS EMPTY BEFORE PLAYING
+
+        if (currentThing.getValue() != CellValue.Empty)
+            return PlayReaction.FailNotEmpty;
+
+        if (currentBoard.containsCellable()) {
+            currentThing.setValue(_turn);
+
+            _lastPlayedPoint = new Point(row, column);
+
+            var tempCalc = calculateRespectPastPoint();
+            boolean relocated = false;
+            goBackLevel();
+            if (tempCalc) {
+                setLevel(_lastPlayedPoint.x, _lastPlayedPoint.y);
+                relocated = true;
+            }
+
+            currentBoard.setValue(CellValue.Calculate);
+            if (currentBoard.getValue() != CellValue.Empty)
+            {
+                // Value was changed winner detected of miniboard
+                var parent = currentChild.getParent();
+                while (parent != null) {
+                    var parentBoard = parent.getBoard();
+                    parentBoard.setValue(CellValue.Calculate);
+
+                    if (parentBoard.getValue() != CellValue.Empty)
+                        parent = parent.getParent();
+                    else break;
+                }
+            }
+
+            if (hasWinner()) {
+                return PlayReaction.SuccessGameEnd;
+            }
+            swapTurn();
+            return relocated ? PlayReaction.SuccessCellRelocated : PlayReaction.SuccessCell;
+        } else {
+            setLevel(row, column);
+            return PlayReaction.SuccessBoard;
+        }
     }
 }
