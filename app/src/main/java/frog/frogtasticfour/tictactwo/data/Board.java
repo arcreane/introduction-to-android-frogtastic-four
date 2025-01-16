@@ -1,5 +1,7 @@
 package frog.frogtasticfour.tictactwo.data;
 
+import androidx.annotation.NonNull;
+
 import frog.frogtasticfour.tictactwo.data.enums.CellValue;
 import frog.frogtasticfour.tictactwo.exceptions.BoardException;
 import frog.frogtasticfour.tictactwo.exceptions.CellValueException;
@@ -119,5 +121,26 @@ public class Board implements IGridable{
             }
         } else
             _value = value;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        for (IGridable[] iGridables : _grid) {
+            for (int col = 0; col < iGridables.length; col++) {
+                IGridable cell = iGridables[col];
+                String value = cell.getValue().toString(); // Get the value as a string
+                builder.append(value);
+
+                if (col < iGridables.length - 1) {
+                    builder.append("|"); // Add a separator between columns
+                }
+            }
+            builder.append("\n"); // New line at the end of each row
+        }
+
+        return builder.toString();
     }
 }
