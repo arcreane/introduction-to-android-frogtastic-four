@@ -1,6 +1,7 @@
 package frog.frogtasticfour.tictactwo.data;
 
 import frog.frogtasticfour.tictactwo.data.enums.CellValue;
+import frog.frogtasticfour.tictactwo.exceptions.GameException;
 
 public class Game {
     private final Board _board;
@@ -28,5 +29,11 @@ public class Game {
             _turn = CellValue.X;
     }
 
+    public Game(int depth, int size, CellValue starting) {
+        if (!starting.isPlayer())
+            throw new GameException("Starting player has to be X or O");
 
+        _board = Board.CreateBoard(depth, size);
+        _turn = starting;
+    }
 }
