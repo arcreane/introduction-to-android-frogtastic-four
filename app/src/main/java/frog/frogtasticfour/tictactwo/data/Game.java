@@ -22,6 +22,15 @@ public class Game {
     public Level getCurrentLevel() {
         return _currentLevel.getLastChild();
     }
+    
+    public boolean goBackLevel() {
+        var lastChild = _currentLevel.getLastChild();
+        if (lastChild == _currentLevel || !lastChild.hasParent())
+            return false;
+        lastChild.getParent().setChild(null);
+        //lastChild.getParent().getParent().setChild(lastChild.getParent());
+        return true;
+    }
 
     private boolean calculateRespectPastPoint() {
         if (_lastPlayedPoint == null)
