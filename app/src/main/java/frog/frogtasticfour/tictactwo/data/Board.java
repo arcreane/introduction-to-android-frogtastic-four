@@ -1,6 +1,7 @@
 package frog.frogtasticfour.tictactwo.data;
 
 import frog.frogtasticfour.tictactwo.data.enums.CellValue;
+import frog.frogtasticfour.tictactwo.exceptions.BoardException;
 
 public class Board implements IGridable{
     private CellValue _value = CellValue.Empty;
@@ -24,15 +25,18 @@ public class Board implements IGridable{
 
     private static final MatrixCreator<Cell> _cellCreator = new MatrixCreator<>(Cell::new, Cell.class);
 
-    public static Board CreateBoard() {
+    public static Board CreateBoard() throws BoardException {
         return CreateBoard(2, 3);
     }
 
-    public static Board CreateBoard(int levels) {
+    public static Board CreateBoard(int levels) throws BoardException {
         return CreateBoard(levels, 3);
     }
 
-    public static Board CreateBoard(int levels, int size) {
+    public static Board CreateBoard(int levels, int size) throws BoardException {
+        if (levels == 0)
+            throw new BoardException("Board is too small");
+
         var interiorLevel = levels - 1;
         var boardCreator = new MatrixCreator<>(() -> CreateBoard(interiorLevel, size), Board.class);
         if (interiorLevel == 0) //its cellable
