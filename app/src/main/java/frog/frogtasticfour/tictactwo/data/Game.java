@@ -101,14 +101,6 @@ public class Game {
 
             _lastPlayedPoint = new Point(row, column);
 
-            var tempCalc = calculateRespectPastPoint();
-            boolean relocated = false;
-            goBackLevel();
-            if (tempCalc) {
-                setLevel(_lastPlayedPoint.x, _lastPlayedPoint.y);
-                relocated = true;
-            }
-
             currentBoard.setValue(CellValue.Calculate);
             if (currentBoard.getValue() != CellValue.Empty)
             {
@@ -122,6 +114,15 @@ public class Game {
                         parent = parent.getParent();
                     else break;
                 }
+            }
+
+            // MUST BE HERE TO AVOID WRITING TO A FULL CELL
+            var tempCalc = calculateRespectPastPoint();
+            boolean relocated = false;
+            goBackLevel();
+            if (tempCalc) {
+                setLevel(_lastPlayedPoint.x, _lastPlayedPoint.y);
+                relocated = true;
             }
 
             if (hasWinner()) {
