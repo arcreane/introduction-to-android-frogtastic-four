@@ -1,6 +1,6 @@
 package frog.frogtasticfour.tictactwo.data;
 
-public class Level {
+public class Level implements Cloneable {
     private Level _parent;
     private Level _child;
     private final Board _board;
@@ -69,5 +69,16 @@ public class Level {
             level = level._child;
         }
         return level;
+    }
+
+    @Override
+    public Level clone() {
+        try {
+            Level clone = (Level) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
