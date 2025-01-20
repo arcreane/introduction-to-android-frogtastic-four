@@ -22,6 +22,10 @@ public class Game {
     public Level getCurrentLevel() {
         return _currentLevel.getLastChild();
     }
+
+    public Level getCurrentLevelTree() {
+        return _currentLevel;
+    }
     
     public boolean goBackLevel() {
         var lastChild = _currentLevel.getLastChild();
