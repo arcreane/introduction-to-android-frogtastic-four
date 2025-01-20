@@ -13,28 +13,20 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import frog.frogtasticfour.tictactwo.databinding.FragmentSecondBinding;
 
-public class SecondFragment extends Fragment {
+public class FourthFragment extends Fragment {
 
-   public SecondFragment(){
+    public FourthFragment(){
 
-   }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_fourth, container, false);
 
 
-        Button buttonFirst = view.findViewById(R.id.back_one);
+        Button buttonFirst = view.findViewById(R.id.back_three);
         buttonFirst.setOnClickListener(v -> {
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment, new FirstFragment())
-                        .addToBackStack(null)
-                        .commit();
-            });
-
-        Button buttonSecond = view.findViewById(R.id.next_three);
-        buttonSecond.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.nav_host_fragment, new ThirdFragment())
                     .addToBackStack(null)

@@ -13,30 +13,30 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import frog.frogtasticfour.tictactwo.databinding.FragmentSecondBinding;
 
-public class SecondFragment extends Fragment {
+public class ThirdFragment extends Fragment {
 
-   public SecondFragment(){
+    public ThirdFragment(){
 
-   }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
 
 
-        Button buttonFirst = view.findViewById(R.id.back_one);
+        Button buttonFirst = view.findViewById(R.id.back_two);
         buttonFirst.setOnClickListener(v -> {
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment, new FirstFragment())
-                        .addToBackStack(null)
-                        .commit();
-            });
+            requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment, new SecondFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
 
-        Button buttonSecond = view.findViewById(R.id.next_three);
+        Button buttonSecond = view.findViewById(R.id.next_four);
         buttonSecond.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment, new ThirdFragment())
+                    .replace(R.id.nav_host_fragment, new FourthFragment())
                     .addToBackStack(null)
                     .commit();
         });
